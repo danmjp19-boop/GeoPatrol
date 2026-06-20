@@ -1,1 +1,8 @@
-
+[
+  {
+    "cedula": "12345678",
+    "password": "123456",
+    "cai": "CAI Andes",
+    "cuadrantes": ["C-21"]
+  }
+]
