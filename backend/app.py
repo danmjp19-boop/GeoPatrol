@@ -3,7 +3,7 @@ import json
 
 app = Flask(__name__)
 
-with open("../database/database/usuarios.json", "r") as f:
+with open("../database/usuarios.json", "r") as f:
     usuarios = json.load(f)
 
 @app.route("/")
