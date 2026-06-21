@@ -1,0 +1,10 @@
+[
+  {
+    "cc": "12345678",
+    "password": "1234",
+    "nombre": "Administrador",
+    "cai": "CAI Andes",
+    "cuadrantes": ["C-21", "C-22"],
+    "rol": "admin"
+  }
+]
