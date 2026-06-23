@@ -1,40 +1,55 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-<title>GeoPatrol</title>
+    <title>GeoPatrol</title>
 </head>
 <body>
 
 <h1>GeoPatrol</h1>
 
-<input type="text" placeholder="Cédula">
+<input id="cc" type="text" placeholder="Cédula">
 
 <br><br>
 
-<input type="password" placeholder="Contraseña">
+<input id="password" type="password" placeholder="Contraseña">
 
 <br><br>
 
-<select>
-<option>Seleccione CAI</option>
-<option>CAI Andes</option>
-<option>CAI Aures</option>
-<option>CAI Lisboa</option>
-</select>
+<button onclick="login()">Ingresar</button>
 
-<br><br>
+<p id="resultado"></p>
 
-<p>Seleccione hasta 3 cuadrantes</p>
+<script>
+async function login() {
 
-<input type="checkbox"> C-21<br>
-<input type="checkbox"> C-22<br>
-<input type="checkbox"> C-23<br>
-<input type="checkbox"> C-24<br>
+    const cc = document.getElementById("cc").value;
+    const password = document.getElementById("password").value;
 
-<br>
+    const respuesta = await fetch(
+        "https://geopatrol.onrender.com/login",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                cc: cc,
+                password: password
+            })
+        }
+    );
 
-<button>Ingresar</button>
+    const datos = await respuesta.json();
+
+    if(datos.success){
+        document.getElementById("resultado").innerHTML =
+            "Bienvenido " + datos.nombre;
+    }else{
+        document.getElementById("resultado").innerHTML =
+            datos.mensaje;
+    }
+}
+</script>
 
 </body>
 </html>
