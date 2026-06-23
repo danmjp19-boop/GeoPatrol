@@ -4,11 +4,26 @@
     <title>GeoPatrol - Supervisor</title>
 </head>
 <body>
-
 <h1>Panel Supervisor</h1>
+<h2>Crear Usuario</h2>
+<input id="cc" type="text" placeholder="Cédula">
+<br><br>
+<input id="nombre" type="text" placeholder="Nombre completo">
+<br><br>
+<input id="password" type="password" placeholder="Contraseña">
+<br><br>
+<input id="cai" type="text" placeholder="CAI">
+<br><br>
+<select id="rol">
+    <option value="patrullero">Patrullero</option>
+    <option value="admin">Supervisor</option>
+</select>
 
+Crear Usuario
+
+<p id="mensaje"></p>
+<hr>
 <h2>Patrulleros en servicio</h2>
-
 <table border="1">
 <tr>
 <th>Nombre</th>
@@ -16,21 +31,28 @@
 <th>Cuadrantes</th>
 <th>Estado</th>
 </tr>
-
 <tr>
 <td>Juan Pérez</td>
 <td>CAI Andes</td>
 <td>C-21, C-22</td>
 <td>Activo</td>
 </tr>
-
 </table>
-
 <br>
-
 <a href="mapa.html">
 Ver mapa GPS
 </a>
-
+<script>
+function crearUsuario() {
+    const cc = document.getElementById("cc").value;
+    const nombre = document.getElementById("nombre").value;
+    const password = document.getElementById("password").value;
+    const cai = document.getElementById("cai").value;
+    const rol = document.getElementById("rol").value;
+    document.getElementById("mensaje").innerHTML =
+        "Usuario listo para crear: " +
+        nombre + " (" + rol + ")";
+}
+</script>
 </body>
 </html>
