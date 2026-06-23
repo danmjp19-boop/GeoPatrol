@@ -2,166 +2,150 @@
 <html>
 <head>
     <title>GeoPatrol - Supervisor</title>
-
-    <style>
-
-        body{
-            font-family:Arial,sans-serif;
-            background:#f5f5f5;
-            text-align:center;
-            padding:20px;
-        }
-
-        .encabezado{
-            background:#003366;
-            color:white;
-            padding:20px;
-            border-radius:10px;
-            margin:auto;
-            max-width:900px;
-        }
-
-        h1{
-            margin:0;
-            font-size:42px;
-        }
-
-        .card{
-            background:white;
-            max-width:900px;
-            margin:20px auto;
-            padding:25px;
-            border-radius:10px;
-        }
-
-        input,select{
-            width:90%;
-            max-width:600px;
-            padding:15px;
-            margin:10px;
-            font-size:22px;
-            border-radius:8px;
-            border:1px solid #ccc;
-        }
-
-        button{
-            width:90%;
-            max-width:600px;
-            padding:18px;
-            margin:10px;
-            font-size:24px;
-            border:none;
-            border-radius:10px;
-            cursor:pointer;
-        }
-
-        .crear{
-            background:#28a745;
-            color:white;
-        }
-
-        .cerrar{
-            background:#6c757d;
-            color:white;
-        }
-
-        table{
-            width:100%;
-            border-collapse:collapse;
-            margin-top:20px;
-        }
-
-        th{
-            background:#003366;
-            color:white;
-            padding:12px;
-        }
-
-        td{
-            padding:12px;
-            border:1px solid #ddd;
-        }
-
-    </style>
-
+<style>
+    body{
+        font-family:Arial,sans-serif;
+        background:#f5f5f5;
+        text-align:center;
+        padding:20px;
+    }
+    .encabezado{
+        background:#003366;
+        color:white;
+        padding:20px;
+        border-radius:10px;
+        margin:auto;
+        max-width:900px;
+    }
+    h1{
+        margin:0;
+        font-size:42px;
+    }
+    .card{
+        background:white;
+        max-width:900px;
+        margin:20px auto;
+        padding:25px;
+        border-radius:10px;
+    }
+    input,select{
+        width:90%;
+        max-width:600px;
+        padding:15px;
+        margin:10px;
+        font-size:22px;
+        border-radius:8px;
+        border:1px solid #ccc;
+    }
+    button{
+        width:90%;
+        max-width:600px;
+        padding:18px;
+        margin:10px;
+        font-size:24px;
+        border:none;
+        border-radius:10px;
+        cursor:pointer;
+    }
+    .crear{
+        background:#28a745;
+        color:white;
+    }
+    .cerrar{
+        background:#6c757d;
+        color:white;
+    }
+    table{
+        width:100%;
+        border-collapse:collapse;
+        margin-top:20px;
+    }
+    th{
+        background:#003366;
+        color:white;
+        padding:12px;
+    }
+    td{
+        padding:12px;
+        border:1px solid #ddd;
+    }
+</style>
 </head>
-
 <body>
-
 <div class="encabezado">
     <h1>🚔 GeoPatrol Supervisor</h1>
 </div>
-
 <div class="card">
-
 <h2>👤 Crear Usuario</h2>
-
 <input id="cc" type="text" placeholder="Cédula">
-
 <input id="nombre" type="text" placeholder="Nombre completo">
-
 <input id="password" type="password" placeholder="Contraseña">
-
 <input id="cai" type="text" placeholder="CAI">
-
 <select id="rol">
     <option value="patrullero">Patrullero</option>
     <option value="admin">Supervisor</option>
 </select>
-
 <button class="crear" onclick="crearUsuario()">
     ✅ Crear Usuario
 </button>
-
 <p id="mensaje"></p>
-
 </div>
-
 <div class="card">
-
 <h2>🚓 Patrulleros en Servicio</h2>
-
 <table>
-
 <tr>
 <th>Nombre</th>
 <th>CAI</th>
 <th>Cuadrantes</th>
 <th>Estado</th>
 </tr>
-
 <tr>
 <td>Juan Pérez</td>
 <td>CAI Andes</td>
 <td>C-21, C-22</td>
 <td>Activo</td>
 </tr>
-
 </table>
-
 </div>
-
 <div class="card">
-
 <h2>📍 Mapa GPS</h2>
-
 <button>
     Ver Mapa
 </button>
-
 </div>
-
 <button class="cerrar" onclick="cerrarSesion()">
     🚪 Cerrar Sesión
 </button>
-
 <script>
-
-function cerrarSesion(){
-    window.location.href="login.html";
+async function crearUsuario() {
+    const cc = document.getElementById("cc").value;
+    const nombre = document.getElementById("nombre").value;
+    const password = document.getElementById("password").value;
+    const cai = document.getElementById("cai").value;
+    const rol = document.getElementById("rol").value;
+    const respuesta = await fetch(
+        "https://geopatrol.onrender.com/crear_usuario",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                cc: cc,
+                nombre: nombre,
+                password: password,
+                cai: cai,
+                rol: rol
+            })
+        }
+    );
+    const datos = await respuesta.json();
+    document.getElementById("mensaje").innerHTML =
+        datos.mensaje;
 }
-
+function cerrarSesion(){
+    window.location.href = "login.html";
+}
 </script>
-
 </body>
 </html>
