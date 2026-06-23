@@ -18,13 +18,16 @@ def inicio():
 
 @app.route("/login", methods=["POST"])
 def login():
+
     datos = request.json
 
     cc = datos.get("cc")
     password = datos.get("password")
 
     for usuario in usuarios:
+
         if usuario["cc"] == cc and usuario["password"] == password:
+
             return jsonify({
                 "success": True,
                 "nombre": usuario["nombre"],
@@ -37,6 +40,7 @@ def login():
         "success": False,
         "mensaje": "Credenciales incorrectas"
     })
+
 @app.route("/crear_usuario", methods=["POST"])
 def crear_usuario():
 
@@ -56,18 +60,25 @@ def crear_usuario():
     usuarios.append(nuevo_usuario)
 
     with open(USUARIOS_FILE, "w", encoding="utf-8") as f:
-        json.dump(usuarios, f, ensure_ascii=False, indent=4)
+        json.dump(
+            usuarios,
+            f,
+            ensure_ascii=False,
+            indent=4
+        )
 
     return jsonify({
         "success": True,
         "mensaje": "Usuario creado correctamente"
     })
-    @app.route("/usuarios", methods=["GET"])
+
+@app.route("/usuarios", methods=["GET"])
 def obtener_usuarios():
 
     return jsonify({
         "success": True,
         "usuarios": usuarios
     })
+
 if __name__ == "__main__":
     app.run(debug=True)
