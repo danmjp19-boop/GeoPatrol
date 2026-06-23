@@ -11,6 +11,7 @@
         padding: 20px;
         background-color: #f5f5f5;
     }
+
     .encabezado {
         background: #003366;
         color: white;
@@ -18,35 +19,43 @@
         border-radius: 10px;
         margin-bottom: 30px;
     }
+
     h1 {
         margin: 0;
         font-size: 42px;
     }
+
     h2 {
         font-size: 40px;
         margin-bottom: 20px;
     }
+
     h3 {
         font-size: 32px;
         margin-top: 30px;
     }
+
     p {
         font-size: 28px;
     }
+
     .info {
         background: white;
         padding: 20px;
         border-radius: 10px;
         margin-bottom: 20px;
     }
+
     .cuadrantes {
         font-size: 30px;
         line-height: 50px;
     }
+
     input[type="checkbox"] {
         transform: scale(1.8);
         margin-right: 10px;
     }
+
     button {
         width: 90%;
         max-width: 500px;
@@ -57,18 +66,22 @@
         border-radius: 10px;
         cursor: pointer;
     }
+
     .iniciar {
         background: #28a745;
         color: white;
     }
+
     .finalizar {
         background: #dc3545;
         color: white;
     }
+
     .cerrar {
         background: #6c757d;
         color: white;
     }
+
     .gps {
         background: white;
         padding: 20px;
@@ -77,16 +90,22 @@
     }
 </style>
 </head>
+
 <body>
+
 <div class="encabezado">
     <h1>🚔 GeoPatrol</h1>
 </div>
+
 <h2>Panel del Patrullero</h2>
+
 <div class="info">
     <p><strong>Nombre:</strong> <span id="nombreUsuario"></span></p>
     <p><strong>CAI:</strong> <span id="caiUsuario"></span></p>
 </div>
+
 <h3>📍 Seleccione hasta 3 cuadrantes</h3>
+
 <div class="cuadrantes">
     <label><input type="checkbox"> C-21</label><br>
     <label><input type="checkbox"> C-22</label><br>
@@ -94,30 +113,42 @@
     <label><input type="checkbox"> C-24</label><br>
     <label><input type="checkbox"> C-25</label><br>
 </div>
+
 <br>
+
 <button class="iniciar">
     🟢 Iniciar Servicio
 </button>
+
 <button class="finalizar">
     🔴 Finalizar Servicio
 </button>
+
 <div class="gps">
     <h3>📡 Estado GPS</h3>
-    <p>Ubicación activa</p>
+    <p id="estadoGPS">GPS desconectado</p>
 </div>
+
 <br>
+
 <button class="cerrar" onclick="cerrarSesion()">
     🚪 Cerrar Sesión
 </button>
+
 <script>
-    document.getElementById("nombreUsuario").innerHTML =
-        localStorage.getItem("nombre") || "Usuario";
-    document.getElementById("caiUsuario").innerHTML =
-        localStorage.getItem("cai") || "CAI";
-    function cerrarSesion() {
-        localStorage.clear();
-        window.location.href = "login.html";
-    }
+
+document.getElementById("nombreUsuario").innerHTML =
+    localStorage.getItem("nombre") || "Usuario";
+
+document.getElementById("caiUsuario").innerHTML =
+    localStorage.getItem("cai") || "CAI";
+
+function cerrarSesion() {
+    localStorage.clear();
+    window.location.href = "login.html";
+}
+
 </script>
+
 </body>
 </html>
