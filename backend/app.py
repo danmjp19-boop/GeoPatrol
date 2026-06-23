@@ -1,9 +1,13 @@
 from flask import Flask, request, jsonify
 import json
+import os
 
 app = Flask(__name__)
 
-with open("../database/usuarios.json", "r") as f:
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+USUARIOS_FILE = os.path.join(BASE_DIR, "..", "database", "usuarios.json")
+
+with open(USUARIOS_FILE, "r", encoding="utf-8") as f:
     usuarios = json.load(f)
 
 @app.route("/")
