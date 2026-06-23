@@ -37,6 +37,30 @@ def login():
         "success": False,
         "mensaje": "Credenciales incorrectas"
     })
+@app.route("/crear_usuario", methods=["POST"])
+def crear_usuario():
 
+    global usuarios
+
+    datos = request.json
+
+    nuevo_usuario = {
+        "cc": datos.get("cc"),
+        "nombre": datos.get("nombre"),
+        "password": datos.get("password"),
+        "cai": datos.get("cai"),
+        "rol": datos.get("rol"),
+        "cuadrantes": []
+    }
+
+    usuarios.append(nuevo_usuario)
+
+    with open(USUARIOS_FILE, "w", encoding="utf-8") as f:
+        json.dump(usuarios, f, ensure_ascii=False, indent=4)
+
+    return jsonify({
+        "success": True,
+        "mensaje": "Usuario creado correctamente"
+    })
 if __name__ == "__main__":
     app.run(debug=True)
