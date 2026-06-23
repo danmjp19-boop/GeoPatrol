@@ -90,6 +90,35 @@
     <p id="mensaje"></p>
 
 </div>
-
+<script>
+async function login() {
+    const cc = document.getElementById("cc").value;
+    const password = document.getElementById("password").value;
+    const respuesta = await fetch(
+        "https://geopatrol.onrender.com/login",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                cc: cc,
+                password: password
+            })
+        }
+    );
+    const datos = await respuesta.json();
+    if(datos.success){
+        if(datos.rol === "admin"){
+            window.location.href = "supervisor.html";
+        }else{
+            window.location.href = "panel.html";
+        }
+    }else{
+        document.getElementById("mensaje").innerHTML =
+            datos.mensaje;
+    }
+}
+</script>
 </body>
 </html>
