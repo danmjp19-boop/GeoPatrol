@@ -1,21 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>GeoPatrol - Mapa</title>
+<title>GeoPatrol - Mapa GPS</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    text-align:center;
+    background:#f5f5f5;
+}
+
+#mapa{
+    background:white;
+    max-width:800px;
+    margin:auto;
+    padding:20px;
+    border-radius:10px;
+    text-align:left;
+}
+</style>
+
 </head>
 <body>
 
-<h1>GeoPatrol</h1>
+<h1>🚔 GeoPatrol</h1>
 
-<h3>Patrulleros en servicio</h3>
+<h2>📍 Patrulleros en Servicio</h2>
 
 <div id="mapa">
-Aquí aparecerá el mapa GPS
+Cargando ubicaciones...
 </div>
 
 <br>
 
-<button>Actualizar ubicación</button>
+<button onclick="cargarGPS()">
+Actualizar Ubicaciones
+</button>
+
+<script>
+
+async function cargarGPS(){
+
+    const respuesta = await fetch(
+        "https://geopatrol.onrender.com/gps"
+    );
+
+    const datos = await respuesta.json();
+
+    let html = "";
+
+    for(const cc in datos.ubicaciones){
+
+        const gps = datos.ubicaciones[cc];
+
+        html += `
+        <p>
+        👮 ${cc}<br>
+        Latitud: ${gps.lat}<br>
+        Longitud: ${gps.lon}
+        </p>
+        <hr>
+        `;
+    }
+
+    document.getElementById("mapa").innerHTML =
+        html;
+}
+
+cargarGPS();
+
+setInterval(
+    cargarGPS,
+    5000
+);
+
+</script>
 
 </body>
 </html>
