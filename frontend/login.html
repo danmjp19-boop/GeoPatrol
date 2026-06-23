@@ -22,7 +22,6 @@
         max-width:700px;
         margin:auto;
         padding:30px;
-        border-radius:10px;
         border-radius:15px;
         box-shadow:0 0 10px rgba(0,0,0,0.1);
     }
@@ -96,6 +95,9 @@ async function login() {
         );
         const datos = await respuesta.json();
         if(datos.success){
+            localStorage.setItem("nombre", datos.nombre);
+            localStorage.setItem("cai", datos.cai);
+            localStorage.setItem("rol", datos.rol);
             if(datos.rol === "admin"){
                 window.location.href = "supervisor.html";
             }else{
