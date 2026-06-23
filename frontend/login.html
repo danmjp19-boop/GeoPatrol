@@ -98,6 +98,7 @@ async function login() {
             localStorage.setItem("nombre", datos.nombre);
             localStorage.setItem("cai", datos.cai);
             localStorage.setItem("rol", datos.rol);
+            localStorage.setItem("cc", datos.cc);
             if(datos.rol === "admin"){
                 window.location.href = "supervisor.html";
             }else{
