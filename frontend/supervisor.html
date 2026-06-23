@@ -3,72 +3,72 @@
 <head>
     <title>GeoPatrol - Supervisor</title>
 <style>
-    body{
-        font-family:Arial,sans-serif;
-        background:#f5f5f5;
-        text-align:center;
-        padding:20px;
-    }
-    .encabezado{
-        background:#003366;
-        color:white;
-        padding:20px;
-        border-radius:10px;
-        margin:auto;
-        max-width:900px;
-    }
-    h1{
-        margin:0;
-        font-size:42px;
-    }
-    .card{
-        background:white;
-        max-width:900px;
-        margin:20px auto;
-        padding:25px;
-        border-radius:10px;
-    }
-    input,select{
-        width:90%;
-        max-width:600px;
-        padding:15px;
-        margin:10px;
-        font-size:22px;
-        border-radius:8px;
-        border:1px solid #ccc;
-    }
-    button{
-        width:90%;
-        max-width:600px;
-        padding:18px;
-        margin:10px;
-        font-size:24px;
-        border:none;
-        border-radius:10px;
-        cursor:pointer;
-    }
-    .crear{
-        background:#28a745;
-        color:white;
-    }
-    .cerrar{
-        background:#6c757d;
-        color:white;
-    }
-    table{
-        width:100%;
-        border-collapse:collapse;
-        margin-top:20px;
-    }
-    th{
-        background:#003366;
-        color:white;
-        padding:12px;
-    }
-    td{
-        padding:12px;
-        border:1px solid #ddd;
-    }
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f5f5;
+    text-align:center;
+    padding:20px;
+}
+.encabezado{
+    background:#003366;
+    color:white;
+    padding:20px;
+    border-radius:10px;
+    margin:auto;
+    max-width:900px;
+}
+h1{
+    margin:0;
+    font-size:42px;
+}
+.card{
+    background:white;
+    max-width:900px;
+    margin:20px auto;
+    padding:25px;
+    border-radius:10px;
+}
+input,select{
+    width:90%;
+    max-width:600px;
+    padding:15px;
+    margin:10px;
+    font-size:22px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+button{
+    width:90%;
+    max-width:600px;
+    padding:18px;
+    margin:10px;
+    font-size:24px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+.crear{
+    background:#28a745;
+    color:white;
+}
+.cerrar{
+    background:#6c757d;
+    color:white;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+th{
+    background:#003366;
+    color:white;
+    padding:12px;
+}
+td{
+    padding:12px;
+    border:1px solid #ddd;
+}
 </style>
 </head>
 <body>
@@ -91,20 +91,15 @@
 <p id="mensaje"></p>
 </div>
 <div class="card">
-<h2>🚓 Patrulleros en Servicio</h2>
+<h2>🚓 Usuarios Registrados</h2>
 <table>
 <tr>
 <th>Nombre</th>
 <th>CAI</th>
-<th>Cuadrantes</th>
-<th>Estado</th>
+<th>Rol</th>
 </tr>
-<tr>
-<td>Juan Pérez</td>
-<td>CAI Andes</td>
-<td>C-21, C-22</td>
-<td>Activo</td>
-</tr>
+<tbody id="tablaUsuarios">
+</tbody>
 </table>
 </div>
 <div class="card">
@@ -118,7 +113,6 @@
 </button>
 <script>
 async function crearUsuario() {
-    alert("Crear usuario funcionando");
     const cc = document.getElementById("cc").value;
     const nombre = document.getElementById("nombre").value;
     const password = document.getElementById("password").value;
@@ -143,10 +137,30 @@ async function crearUsuario() {
     const datos = await respuesta.json();
     document.getElementById("mensaje").innerHTML =
         datos.mensaje;
+    cargarUsuarios();
+}
+async function cargarUsuarios(){
+    const respuesta = await fetch(
+        "https://geopatrol.onrender.com/usuarios"
+    );
+    const datos = await respuesta.json();
+    let html = "";
+    datos.usuarios.forEach(usuario => {
+        html += `
+        <tr>
+            <td>${usuario.nombre}</td>
+            <td>${usuario.cai}</td>
+            <td>${usuario.rol}</td>
+        </tr>
+        `;
+    });
+    document.getElementById("tablaUsuarios").innerHTML =
+        html;
 }
 function cerrarSesion(){
-    window.location.href = "login.html";
+    window.location.href="login.html";
 }
+cargarUsuarios();
 </script>
 </body>
 </html>
