@@ -116,10 +116,9 @@
 
 <br>
 
-<button class="iniciar">
+<button class="iniciar" onclick="iniciarGPS()">
     🟢 Iniciar Servicio
 </button>
-
 <button class="finalizar">
     🔴 Finalizar Servicio
 </button>
@@ -147,7 +146,50 @@ function cerrarSesion() {
     localStorage.clear();
     window.location.href = "login.html";
 }
+let gpsActivo = false;
 
+function iniciarGPS() {
+
+    if (gpsActivo) return;
+
+    gpsActivo = true;
+
+    document.getElementById("estadoGPS").innerHTML =
+        "🟢 GPS conectado";
+
+    navigator.geolocation.watchPosition(
+        async function(posicion){
+
+            const lat = posicion.coords.latitude;
+            const lon = posicion.coords.longitude;
+
+            const cc = localStorage.getItem("cc");
+
+            await fetch(
+                "https://geopatrol.onrender.com/actualizar_gps",
+                {
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body: JSON.stringify({
+                        cc: cc,
+                        lat: lat,
+                        lon: lon
+                    })
+                }
+            );
+
+        },
+        function(error){
+            document.getElementById("estadoGPS").innerHTML =
+                "🔴 GPS bloqueado";
+        },
+        {
+            enableHighAccuracy:true
+        }
+    );
+}
 </script>
 
 </body>
