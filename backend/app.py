@@ -62,5 +62,12 @@ def crear_usuario():
         "success": True,
         "mensaje": "Usuario creado correctamente"
     })
+    @app.route("/usuarios", methods=["GET"])
+def obtener_usuarios():
+
+    return jsonify({
+        "success": True,
+        "usuarios": usuarios
+    })
 if __name__ == "__main__":
     app.run(debug=True)
