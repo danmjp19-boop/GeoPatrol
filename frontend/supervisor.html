@@ -42,15 +42,35 @@
 Ver mapa GPS
 </a>
 <script>
-function crearUsuario() {
+async function crearUsuario() {
+
     const cc = document.getElementById("cc").value;
     const nombre = document.getElementById("nombre").value;
     const password = document.getElementById("password").value;
     const cai = document.getElementById("cai").value;
     const rol = document.getElementById("rol").value;
+
+    const respuesta = await fetch(
+        "https://geopatrol.onrender.com/crear_usuario",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                cc: cc,
+                nombre: nombre,
+                password: password,
+                cai: cai,
+                rol: rol
+            })
+        }
+    );
+
+    const datos = await respuesta.json();
+
     document.getElementById("mensaje").innerHTML =
-        "Usuario listo para crear: " +
-        nombre + " (" + rol + ")";
+        datos.mensaje;
 }
 </script>
 </body>
