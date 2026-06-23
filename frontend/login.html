@@ -1,65 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GeoPatrol</title>
+    <title>GeoPatrol - Login</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background:#f5f5f5;
+            text-align:center;
+            padding:20px;
+        }
+
+        .encabezado{
+            background:#003366;
+            color:white;
+            padding:20px;
+            border-radius:10px;
+            margin:20px auto;
+            max-width:700px;
+        }
+
+        .card{
+            background:white;
+            max-width:700px;
+            margin:auto;
+            padding:30px;
+            border-radius:10px;
+        }
+
+        h1{
+            margin:0;
+            font-size:42px;
+        }
+
+        h2{
+            font-size:36px;
+        }
+
+        input{
+            width:90%;
+            max-width:500px;
+            padding:15px;
+            margin:10px;
+            font-size:24px;
+            border-radius:8px;
+            border:1px solid #ccc;
+        }
+
+        button{
+            width:90%;
+            max-width:500px;
+            padding:18px;
+            margin-top:20px;
+            font-size:24px;
+            border:none;
+            border-radius:10px;
+            background:#28a745;
+            color:white;
+        }
+
+        #mensaje{
+            margin-top:20px;
+            font-size:22px;
+            color:red;
+        }
+    </style>
 </head>
+
 <body>
 
-<h1>GeoPatrol</h1>
+<div class="encabezado">
+    <h1>🚔 GeoPatrol</h1>
+</div>
 
-<input id="cc" type="text" placeholder="Cédula">
+<div class="card">
 
-<br><br>
+    <h2>Inicio de Sesión</h2>
 
-<input id="password" type="password" placeholder="Contraseña">
+    <input id="cc" type="text" placeholder="Cédula">
+    <br>
 
-<br><br>
+    <input id="password" type="password" placeholder="Contraseña">
+    <br>
 
-<button onclick="login()">Ingresar</button>
+    <button onclick="login()">
+        🔑 Ingresar
+    </button>
 
-<p id="resultado"></p>
+    <p id="mensaje"></p>
 
-<script>
-async function login() {
-
-    const cc = document.getElementById("cc").value;
-    const password = document.getElementById("password").value;
-
-    const respuesta = await fetch(
-        "https://geopatrol.onrender.com/login",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                cc: cc,
-                password: password
-            })
-        }
-    );
-
-    const datos = await respuesta.json();
-
-    if(datos.success){
-
-        document.getElementById("resultado").innerHTML =
-            "Bienvenido " + datos.nombre;
-
-        if(datos.rol === "admin"){
-            window.location.href = "supervisor.html";
-        }else{
-            window.location.href = "panel.html";
-        }
-
-    }else{
-
-        document.getElementById("resultado").innerHTML =
-            datos.mensaje;
-
-    }
-}
-</script>
+</div>
 
 </body>
 </html>
