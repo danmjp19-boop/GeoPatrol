@@ -75,8 +75,9 @@ const marcador = L.marker(
 ).addTo(mapa);
 
 marcador.bindPopup(
-    "<b>🚔 Usuario</b><br>" +
-    "CC: " + cc +
+    "<b>👤 " + (gps.nombre || "Usuario") + "</b><br>" +
+    "🏢 CAI: " + (gps.cai || "Sin CAI") +
+    "<br>CC: " + cc +
     "<br>Latitud: " + gps.lat +
     "<br>Longitud: " + gps.lon
 );
