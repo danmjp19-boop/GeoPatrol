@@ -98,12 +98,15 @@ def actualizar_gps():
     lon = datos.get("lon")
     nombre = datos.get("nombre")
     cai = datos.get("cai")
+    cuadrantes = datos.get("cuadrantes")
 
     ubicaciones[cc] = {
-        "nombre": nombre,
-        "cai": cai,
-        "lat": lat,
-        "lon": lon
+          "nombre": nombre,
+
+    "cai": cai,
+    "cuadrantes": cuadrantes,
+    "lat": lat,
+    "lon": lon
     }
 
     return jsonify({
