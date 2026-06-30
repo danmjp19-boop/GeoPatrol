@@ -165,22 +165,29 @@ function iniciarGPS() {
 
             const cc = localStorage.getItem("cc");
 
-            await fetch(
-                "https://geopatrol.onrender.com/actualizar_gps",
-                {
-                    method:"POST",
-                    headers:{
-                        "Content-Type":"application/json"
-                    },
-                    body: JSON.stringify({
-                        cc: cc,
-    nombre: localStorage.getItem("nombre"),
-    cai: localStorage.getItem("cai"),
-    lat: lat,
-    lon: lon
-                    })
-                }
-            );
+            const cuadrantes = [];
+
+document.querySelectorAll('.cuadrantes input[type="checkbox"]:checked').forEach(c => {
+    cuadrantes.push(c.parentElement.innerText.trim());
+});
+
+await fetch(
+    "https://geopatrol.onrender.com/actualizar_gps",
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            cc: cc,
+            nombre: localStorage.getItem("nombre"),
+            cai: localStorage.getItem("cai"),
+            cuadrantes: cuadrantes,
+            lat: lat,
+            lon: lon
+        })
+    }
+);
 
         },
         function(error){
