@@ -174,8 +174,10 @@ function iniciarGPS() {
                     },
                     body: JSON.stringify({
                         cc: cc,
-                        lat: lat,
-                        lon: lon
+    nombre: localStorage.getItem("nombre"),
+    cai: localStorage.getItem("cai"),
+    lat: lat,
+    lon: lon
                     })
                 }
             );
