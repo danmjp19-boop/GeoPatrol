@@ -97,6 +97,7 @@ td{
 <th>Nombre</th>
 <th>CAI</th>
 <th>Rol</th>
+<th>Acciones</th>
 </tr>
 <tbody id="tablaUsuarios">
 </tbody>
@@ -150,17 +151,51 @@ async function cargarUsuarios(){
     datos.usuarios.forEach(usuario => {
         html += `
         <tr>
-            <td>${usuario.nombre}</td>
-            <td>${usuario.cai}</td>
-            <td>${usuario.rol}</td>
-        </tr>
-        `;
+    <td>${usuario.nombre}</td>
+    <td>${usuario.cai}</td>
+    <td>${usuario.rol}</td>
+    <td>
+        <button
+            style="background:#dc3545;color:white;padding:8px 15px;font-size:16px;border:none;border-radius:6px;cursor:pointer;"
+            onclick="eliminarUsuario('${usuario.cc}')">
+            🗑 Eliminar
+        </button>
+    </td>
+</tr>
+`;
     });
     document.getElementById("tablaUsuarios").innerHTML =
         html;
 }
 function cerrarSesion(){
     window.location.href="login.html";
+}
+
+    async function eliminarUsuario(cc){
+
+    if(!confirm("¿Está seguro de eliminar este usuario?")){
+        return;
+    }
+
+    const respuesta = await fetch(
+        "https://geopatrol.onrender.com/eliminar_usuario",
+        {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                cc:cc
+            })
+        }
+    );
+
+    const datos = await respuesta.json();
+
+    alert(datos.mensaje);
+
+    cargarUsuarios();
+
 }
 cargarUsuarios();
 </script>
