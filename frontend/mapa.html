@@ -45,6 +45,8 @@ L.tileLayer(
 ).addTo(mapa);
 
 let marcadores = [];
+   
+    let lineas = [];
 
 async function cargarGPS(){
 
@@ -56,6 +58,9 @@ async function cargarGPS(){
 
     marcadores.forEach(m=>mapa.removeLayer(m));
     marcadores=[];
+    
+    lineas.forEach(l => mapa.removeLayer(l));
+lineas = [];
 
     for(const cc in datos.ubicaciones){
 
@@ -88,7 +93,18 @@ marcador.bindPopup(
         
         marcadores.push(marcador);
     }
+if (datos.rutas && datos.rutas[cc]) {
 
+    const puntos = datos.rutas[cc].map(p => [p.lat, p.lon]);
+
+    const linea = L.polyline(puntos, {
+        color: "blue",
+        weight: 4
+    }).addTo(mapa);
+
+    lineas.push(linea);
+
+}
 }
 
 cargarGPS();
