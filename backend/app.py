@@ -15,6 +15,9 @@ with open(USUARIOS_FILE, "r", encoding="utf-8") as f:
 # GPS en memoria
 ubicaciones = {}
 
+# Historial de recorridos
+rutas = {}
+
 @app.route("/")
 def inicio():
     return "GeoPatrol Backend Activo"
@@ -99,6 +102,14 @@ def actualizar_gps():
     nombre = datos.get("nombre")
     cai = datos.get("cai")
     cuadrantes = datos.get("cuadrantes")
+   
+    if cc not in rutas:
+    rutas[cc] = []
+
+rutas[cc].append({
+    "lat": lat,
+    "lon": lon
+})
 
     ubicaciones[cc] = {
           "nombre": nombre,
@@ -118,9 +129,10 @@ def actualizar_gps():
 def obtener_gps():
 
     return jsonify({
-        "success": True,
-        "ubicaciones": ubicaciones
-    })
+    "success": True,
+    "ubicaciones": ubicaciones,
+    "rutas": rutas
+})
 
 
 if __name__ == "__main__":
